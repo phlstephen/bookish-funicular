@@ -1,0 +1,476 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import categories from '../../../data/categories';
+export function getStaticPaths() {
+  return categories.map((item) => {
+    return {
+      params: {
+        category: item.name.toLocaleLowerCase(),
+      },
+      props: {
+        categoryItem: item,
+      },
+    };
+  });
+}
+
+const { categoryItem } = Astro.props;
+console.log(categoryItem);
+---
+
+<Layout title="Welcome to Astro.">
+  <main>
+    <!-- START BREADCRUMB -->
+    <section class="w-full pb-10">
+      <div class="container px-4 px-12 2xl:px-20 mx-auto">
+        <ul class="flex items-center gap-2 text-sm">
+          <li class="">Home</li>
+          <li>
+            <span>/</span>
+          </li>
+          <li class="">Clothing</li>
+        </ul>
+      </div>
+    </section>
+    <!-- END BREADCRUMB -->
+    <section
+      class="body bg-cover h-[70vh] relative flex flex-col items-end justify-center w-full"
+      style="background-image: url('https://res.cloudinary.com/promotique/image/upload/c_scale,dpr_auto,f_auto,q_auto:good,w_1700/Site%20Images/Category%20Pages/Clothing/Promotique-hero-marquee-001_ES');"
+    >
+      <!-- START HERO SECTION -->
+      <div
+        class="absolute hidden lg:block w-80 top-6 bg-white py-4 px-4 left-10 shadow-sm"
+      >
+        <div class="border-b-2 border-gray-300 py-4">
+          <h4 class="font-bold text-xl lg:text-2xl">{categoryItem.name}</h4>
+        </div>
+        {
+          categoryItem.subcategories.map((subcategory) => {
+            return (
+              <div class="border-b-2 border-gray-300 py-4">
+                <h4 class="font-bold text-lg lg:text-xl mb-4">
+                  {subcategory.name}
+                </h4>
+
+                <ul class="text-gray-800 text-lg space-y-2">
+                  {subcategory.subitems.map((subitem) => {
+                    return <li>{subitem.name}</li>;
+                  })}
+                </ul>
+              </div>
+            );
+          })
+        }
+
+        <div class="border-b-2 border-gray-300 py-4">
+          <h4 class="font-bold text-lg lg:text-xl mb-4">Expore More</h4>
+
+          <ul class="text-gray-800 text-lg space-y-2">
+            <li>
+              <a href="" class="hover:underline"> Baseball Caps</a>
+            </li>
+            <li>
+              <a href="#" class="hover:underline"> Trousers & Shorts</a>
+            </li>
+            <li>
+              <a href="#" class="hover:underline"> Clothing Accessories</a>
+            </li>
+            <li>
+              <a href="#" class="hover:underline">Vests</a>
+            </li>
+            <li>
+              <a href="#" class="hover:underline"> Baby Clothing</a>
+            </li>
+          </ul>
+        </div>
+        <div class="py-2">
+          <a href="" class="my-3 hover:underline rounded-3xl text-lg lg:text-xl"
+            >See All</a
+          >
+        </div>
+      </div>
+
+      <div class="w-full px-4 lg:w-3/4 flex flex-col gap-6">
+        <h4 class="font-bold leading-snug text-2xl lg:text-5xl mb-4">
+          Custom Clothing
+        </h4>
+        <p class="text-gray-500 mb-5 text-lg lg:text-xl w-full lg:w-2/5">
+          Wear your logo with pride on personalized shirts, polos and more.
+        </p>
+        <div>
+          <a
+            href=""
+            class="bg-primary px-6 py-4 mt-6 rounded-3xl text-lg lg:text-xl"
+            >See All</a
+          >
+        </div>
+      </div>
+      <section></section>
+      <!-- END HERO SECTION -->
+      <div class="container mx-auto flex flex justify-end">
+        <div class="w-full px-4 lg:w-3/4">
+          <!-- START SHIRTS AND TOPS -->
+          <section></section>
+
+          <!-- END SHIRTS AND TOPS -->
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="body relative flex flex-col items-end justify-center w-full"
+    >
+      <div class="w-full px-4 lg:w-3/4">
+        <div class="bg-wite w-full space-y-20 py-20">
+          {
+            categoryItem.subcategories.map((item) => {
+              return (
+                <div class="w-full mt-20">
+                  <h4 class="font-bold text-xl lg:text-4xl leading-snug mb-4">
+                    {item.name}
+                  </h4>
+                  {item?.desription && (
+                    <p class="text-lg w-full lg:w-1/2">{item.desription}</p>
+                  )}
+
+                  <div class="grid grid-cols-2 lg:grid-cols-3 gap-10 pr-4 mt-10">
+                    {item.subitems.map((subitem) => {
+                      return (
+                        subitem?.image && (
+                          <div class="flex flex-col gap-2">
+                            <a href="">
+                              <img src={subitem.image} alt="" />
+                            </a>
+                            <h4 class="text-lg lg:text-xl font-medium mb-1 mt-3">
+                              {subitem.name}
+                            </h4>
+                            <p>{subitem?.description}</p>
+                          </div>
+                        )
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })
+          }
+
+          <div class="w-full mt-20">
+            <h4 class="font-bold text-xl lg:text-4xl leading-snug mb-4">
+              Outerwear & Jumpers
+            </h4>
+
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-10 pr-4 mt-10">
+              <div class="flex flex-col gap-2">
+                <a href="">
+                  <img
+                    src="https://res.cloudinary.com/promotique/image/upload/c_scale,dpr_auto,f_auto,q_70,w_auto:50:450/site%20images/category%20pages/clothing/jackets/clothing-jackets"
+                    alt=""
+                  />
+                </a>
+                <h4 class="text-lg lg:text-xl font-medium mb-1 mt-3">
+                  Jackets
+                </h4>
+                <p>
+                  Protect yourself from the elements with our range of custom
+                  jackets.
+                </p>
+              </div>
+              <div class="flex flex-col gap-2">
+                <a href="">
+                  <img
+                    src="https://res.cloudinary.com/promotique/image/upload/c_scale,dpr_auto,f_auto,q_70,w_auto:50:450/site%20images/category%20pages/clothing/jumpers/clothing-jumpers"
+                    alt=""
+                  />
+                </a>
+                <h4 class="text-lg lg:text-xl font-medium mb-1 mt-3">
+                  Sweatshirts
+                </h4>
+                <p>
+                  This casual classic is ideal for everyday wear throughout the
+                  whole year.
+                </p>
+              </div>
+
+              <div class="flex flex-col gap-2">
+                <a href="">
+                  <img
+                    src="https://res.cloudinary.com/promotique/image/upload/c_scale,dpr_auto,f_auto,q_70,w_auto:50:450/site%20images/category%20pages/clothing/fleeces%20knits/clothing-fleeces-knits"
+                    alt=""
+                  />
+                </a>
+                <h4 class="text-lg lg:text-xl font-medium mb-1 mt-3">
+                  Fleeces & Knits
+                </h4>
+                <p>
+                  When the temperature drops, elevate your look with our range
+                  of cozy fleeces and knits.
+                </p>
+              </div>
+              <div class="flex flex-col gap-2">
+                <a href="">
+                  <img
+                    src="https://res.cloudinary.com/promotique/image/upload/c_scale,dpr_auto,f_auto,q_70,w_auto:50:450/site%20images/category%20pages/clothing/vests/clothing-vests"
+                    alt=""
+                  />
+                </a>
+                <h4 class="text-lg lg:text-xl font-medium mb-1 mt-3">Vests</h4>
+                <p>
+                  Maintain a smart look when you need to add an extra layer.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full mt-20">
+            <h4 class="font-bold text-xl lg:text-4xl leading-snug mb-4">
+              Explore More
+            </h4>
+
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-10 pr-4 mt-10">
+              <div class="flex flex-col gap-2">
+                <a href="">
+                  <img
+                    src="https://res.cloudinary.com/promotique/image/upload/c_scale,dpr_auto,f_auto,q_70,w_auto:50:450/site%20images/category%20pages/clothing/baseball%20caps/clothing-baseball-caps"
+                    alt=""
+                  />
+                </a>
+                <h4 class="text-lg lg:text-xl font-medium mb-1 mt-3">Hats</h4>
+                <p>
+                  Top off any uniform or give these out as promos to build brand
+                  exposure.
+                </p>
+              </div>
+              <div class="flex flex-col gap-2">
+                <a href="">
+                  <img
+                    src="https://res.cloudinary.com/promotique/image/upload/c_scale,dpr_auto,f_auto,q_70,w_auto:50:450/site%20images/category%20pages/clothing/trousers%20and%20shorts/clothing-trousers-shorts"
+                    alt=""
+                  />
+                </a>
+                <h4 class="text-lg lg:text-xl font-medium mb-1 mt-3">
+                  Trousers & Shorts
+                </h4>
+                <p>
+                  Ideal for casual summer uniforms and kitting out sports teams.
+                </p>
+              </div>
+
+              <div class="flex flex-col gap-2">
+                <a href="">
+                  <img
+                    src="https://res.cloudinary.com/promotique/image/upload/c_scale,dpr_auto,f_auto,q_70,w_auto:50:450/site%20images/category%20pages/clothing/baby%20clothing/clothing-baby-clothing"
+                    alt=""
+                  />
+                </a>
+                <h4 class="text-lg lg:text-xl font-medium mb-1 mt-3">
+                  Baby Clothing
+                </h4>
+
+                <p>
+                  Custom baby clothing makes an extra special gift that will be
+                  remembered.
+                </p>
+              </div>
+              <div class="flex flex-col gap-2">
+                <a href="">
+                  <img
+                    src="https://res.cloudinary.com/promotique/image/upload/c_scale,dpr_auto,f_auto,q_70,w_auto:50:450/site%20images/category%20pages/clothing/accessories/clothing-accessories"
+                    alt=""
+                  />
+                </a>
+                <h4 class="text-lg lg:text-xl font-medium mb-1 mt-3">
+                  Clothing Accessories
+                </h4>
+                <p>
+                  Discover our wide range of promotional accessories for
+                  showcasing your brand.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full lg:w-1/2 lg:pr-8 mt-20">
+            <h4 class="text-xl lg:text-3xl font-bold mb-4">
+              Increase business exposure with our wide collection of custom
+              clothing.
+            </h4>
+            <p>
+              We offer a range of personalized clothing, such as promotional
+              T-shirts, dress shirts, polos, and more. Custom clothing is a
+              practical way to showcase your brand while keeping your team
+              looking professional and unified. Promotique offers a variety of
+              decoration options, including embroidery and full-color printing.
+              You can also find custom clothing tailored to meet any purpose,
+              whether you need durable attire for everyday wear or promotional
+              clothing to show off your business at trade shows, conventions and
+              more.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- START FOOTER SECTION -->
+    <footer class="w-full bg-dark pt-10">
+      <section class="w-full pb-10">
+        <div class="container px-4 px-12 2xl:px-20 mx-auto">
+          <div class="mb-6">
+            <img
+              src="https://res.cloudinary.com/promotique/image/upload/c_scale,dpr_auto,w_auto/site%20images/footer/satisfaction.svg"
+              alt=""
+            />
+          </div>
+          <div class="flex flex-col lg:flex-row gap-4">
+            <div class="w-full lg:w-1/4">
+              <div class="text-white text-lg">
+                <p>
+                  Satisfaction Guaranteed.<br />
+                  Every time. Any reason. Or we'll make it right
+                </p>
+              </div>
+              <div class="w-full mt-5 border-b border-gray-600"></div>
+            </div>
+            <div class="flex-1 pb-2">
+              <div
+                class="w-full px-4 text-white flex flex-col lg:flex-row gap-4 lg:gap-20"
+              >
+                <div class="">
+                  <h4 class="font-bold mb-4">Let us Help</h4>
+                  <ul class="flex flex-col gap-4 text-sm">
+                    <li>
+                      <a href="#" class="hover:text-primary">My Account</a>
+                    </li>
+                    <li>
+                      <a href="#">Help Center</a>
+                    </li>
+                    <li>
+                      <a href="#">Guide to Personalization</a>
+                    </li>
+                    <li>
+                      <a href="#">Contact us</a>
+                    </li>
+                    <li>
+                      <a href="#">Shipping</a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="">
+                  <h4 class="font-bold mb-4">Our Company</h4>
+                  <ul class="flex flex-col gap-4 text-sm">
+                    <li>
+                      <a href="#" class="hover:text-primary">Careers</a>
+                    </li>
+                    <li>
+                      <a href="#">For Investors</a>
+                    </li>
+                    <li>
+                      <a href="#">For Media</a>
+                    </li>
+                    <li>
+                      <a href="#">Sustainability</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="w-full bg-black py-10">
+        <div class="container px-4 lg:px-20 mx-auto">
+          <div
+            class="w-full flex flex-col lg:flex-row gap-4 justify-between items-center"
+          >
+            <div class="w-full lg:w-1/3">
+              <ul
+                class="flex items-center text-[12px] justify-between text-white text-sm"
+              >
+                <li>
+                  <a href="">1 866 507 7454</a>
+                </li>
+                <li>
+                  <a href="">Home</a>
+                </li>
+                <li>
+                  <a href="">Privacy</a>
+                </li>
+                <li>
+                  <a href=""> Policy</a>
+                </li>
+                <li>
+                  <a href=""> Terms of Use</a>
+                </li>
+                <li>
+                  <a href=""> Legal Notice</a>
+                </li>
+              </ul>
+              <p class="text-gray-500 text-[12px] font-bold mt-2">
+                A CIMPRESS company © 2001-2021 VistaPrint. All rights reserved.<br
+                />
+                Unless stated otherwise, prices are exclusive of delivery and product
+                options.
+              </p>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <a href="#">
+                <img
+                  src="https://res.cloudinary.com/promotique/image/upload/c_scale,dpr_auto,w_auto/site%20images/credit%20cards/mastercard.svg"
+                  class="h-10 w-12"
+                  alt=""
+                />
+              </a>
+              <a href="#">
+                <img
+                  src="https://res.cloudinary.com/promotique/image/upload/c_scale,dpr_auto,w_auto/site%20images/credit%20cards/pay_pal.svg"
+                  class="h-10 w-12"
+                  alt=""
+                />
+              </a>
+              <a href="#">
+                <img
+                  src="https://res.cloudinary.com/promotique/image/upload/c_scale,dpr_auto,w_auto/site%20images/credit%20cards/visa.svg"
+                  class="h-10 w-12"
+                  alt=""
+                />
+              </a>
+            </div>
+
+            <div
+              class="h-10 w-10 rounded-full bg-secondary flex items-center justify-center"
+            >
+              <img
+                src="https://res.cloudinary.com/promotique/image/upload/c_scale,dpr_auto,w_auto/site%20images/footer/instagram-logo.svg"
+                alt=""
+              />
+            </div>
+
+            <div class="flex items-start text-white">
+              <img
+                src="https://res.cloudinary.com/promotique/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_46/country_flags/usflag"
+                class="h-5 w-8"
+                alt=""
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-5 stroke-current"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+    </footer>
+    <!-- END FOOTER SECTION -->
+  </main>
+</Layout>
